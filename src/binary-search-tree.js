@@ -65,19 +65,27 @@ class BinarySearchTree {
 
   remove(data) {
     // Remove line below and write your code here
-    let current = this.find(data);
+    this.rootNode = removeNode(this.rootNode, data);
+  }
 
-    if (!current.left && !current.right) {
-      current = null;
-    } else if (current.left && current.right) {
-      let minCurrent = current.right.left;
-
-      while (minCurrent) {
-        minCurrent = minCurrent.left;
-      }
-    } else {
-      current = current.left ?? current.right;
+  #removeNode(node, data) {
+    if (!node) return null;
+    if (data < node.data) {
+      node.left = this.#removeNode(node.left, data); return node;
     }
+    if (data > node.data) {
+      node.right = this.#removeNode(node.right, data); return node;
+    }
+
+    if (!node.left) return node.right;
+    if (!node.right) return node.right;
+
+    let min = node.right;
+    while (min.left) min = node.left;
+
+    node.data = min.data;
+    node.right = this.#removeNode(node.right, min.data);
+    return node;
   }
 
   min() {
