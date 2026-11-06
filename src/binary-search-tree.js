@@ -65,7 +65,7 @@ class BinarySearchTree {
 
   remove(data) {
     // Remove line below and write your code here
-    this.rootNode = removeNode(this.rootNode, data);
+    this.rootNode = this.#removeNode(this.rootNode, data);
   }
 
   #removeNode(node, data) {
@@ -78,10 +78,10 @@ class BinarySearchTree {
     }
 
     if (!node.left) return node.right;
-    if (!node.right) return node.right;
+    if (!node.right) return node.left;
 
     let min = node.right;
-    while (min.left) min = node.left;
+    while (min.left) min = min.left;
 
     node.data = min.data;
     node.right = this.#removeNode(node.right, min.data);
@@ -90,8 +90,8 @@ class BinarySearchTree {
 
   min() {
     // Remove line below and write your code here
-    let min = this;
-    while (min.left.data) {
+    let min = this.rootNode;
+    while (min.left) {
       min = min.left;
     }
 
@@ -100,8 +100,8 @@ class BinarySearchTree {
 
   max() {
     // Remove line below and write your code here
-    let max = this;
-    while (max.right.data) {
+    let max = this.rootNode;
+    while (max.right) {
       max = max.right;
     }
 
